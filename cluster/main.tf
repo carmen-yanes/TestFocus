@@ -28,7 +28,24 @@ provider "kubernetes" {
     digitalocean_kubernetes_cluster.cluster.kube_config[0].cluster_ca_certificate
     )
 }
+/*
 
+INSTEAD OF CIVO IS DIGITAL OCEAN
+provider "helm" {
+    kubernetes {
+    host     = data.civo_kubernetes_cluster.cluster.api_endpoint
+    client_certificate = base64decode(
+      yamldecode(civo_kubernetes_cluster.cluster.kubeconfig).users[0].user.client-certificate-data
+    )
+    client_key = base64decode(
+      yamldecode(civo_kubernetes_cluster.cluster.kubeconfig).users[0].user.client-key-data
+    )
+    cluster_ca_certificate = base64decode(
+      yamldecode(civo_kubernetes_cluster.cluster.kubeconfig).clusters[0].cluster.certificate-authority-data
+    )
+  }
+}
+*/
 output "cluster-id" {
     value = digitalocean_kubernetes_cluster.cluster.id
 }
