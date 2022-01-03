@@ -6,7 +6,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ template "test-focus.name" . }}
+    app: test-focus
     chart: {{ template "test-focus.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -36,3 +36,23 @@ spec:
               servicePort: http
   {{- end }}
 {{- end }}
+
+
+
+apiVersion: extensions/v1
+kind: Ingress
+metadata:
+  name: test-focus-app
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /testpath
+        pathType: Prefix
+        backend:
+          service:
+            name: test
+            port:
+              number: 80
